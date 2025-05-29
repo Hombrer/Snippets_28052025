@@ -101,3 +101,21 @@ def snippet_edit(request, snippet_id):
         return redirect("snippets-list")  # URL для списка сниппетов
     
 
+def snippet_search(request):
+    # print(f'{request.path = }')
+    # print(f'{request.get_full_path() = }')
+    # print(f'{request.GET = }')
+    search_snippet_id = request.GET.get("snippet_id")
+    if search_snippet_id:
+        return redirect("snippet-detail", snippet_id=search_snippet_id)
+
+    return render(
+            request, 
+            "pages/errors.html", 
+            context = {
+                "error": f"Сниппет с id={search_snippet_id} не найден.",
+                "pagename": "Просмотр сниппета",
+                },
+            status=404
+            )
+    
