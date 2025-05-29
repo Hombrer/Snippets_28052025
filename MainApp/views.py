@@ -25,13 +25,16 @@ def snippets_page(request):
 
 def snippet_detail(request, snippet_id):
     """ Get snippet by id """
+    context = {"pagename": "Просмотр сниппета"}
     try:
         snippet = Snippet.objects.get(id=snippet_id)
     except Snippet.DoesNotExist:
-        raise Http404(f"Сниппет с id={snippet_id} не найден.")
+        return render(
+            request, 
+            "pages/errors.html", 
+            context | {"error": f"Сниппет с id={snippet_id} не найден."},
+            status=404
+            )
     else:
-        context = {
-            "pagename": "Просмотр сниппета",
-            "snippet": snippet,
-        }
+        context["snippet"] = snippet,
         return render(request, "pages/snippet_detail.html", context)
