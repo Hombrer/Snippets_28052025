@@ -21,3 +21,17 @@ def snippets_page(request):
         }
     
     return render(request, 'pages/view_snippets.html', context)
+
+
+def snippet_detail(request, snippet_id):
+    """ Get snippet by id """
+    try:
+        snippet = Snippet.objects.get(id=snippet_id)
+    except Snippet.DoesNotExist:
+        raise Http404(f"Сниппет с id={snippet_id} не найден.")
+    else:
+        context = {
+            "pagename": "Просмотр сниппета",
+            "snippet": snippet,
+        }
+        return render(request, "pages/snippet_detail.html", context)
