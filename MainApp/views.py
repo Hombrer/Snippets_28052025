@@ -134,7 +134,11 @@ def login(request):
             auth.login(request, user)
         else:
             # Return error message
-            pass
+            context = {
+                "pagename": "PythonBin",
+                "errors": ["Wrong username or password"]
+            }
+            return render(request, "pages/index.html", context)
     return redirect('home')
 
 
