@@ -164,10 +164,15 @@ def logout(request):
 def create_user(request):
     context = {'pagename': 'Регистрация нового пользователя'}
     # Создаем пустую форму при запросе GET
-    ...
+    if request.method == "GET":
+        form = UserRegistrationForm()
 
     # Получаем данные из формы, валидируем и на их основе создаем нового пользователя, сохраняя его в БД
-    ...
+    if request.method == "POST":
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("home")
 
-
+    context["form"] = form
     return render(request, 'pages/registration.html', context)

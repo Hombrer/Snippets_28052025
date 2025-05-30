@@ -34,8 +34,6 @@ class SnippetForm(ModelForm):
             "public": CheckboxInput(attrs={"value": "True"})
         }
 
-
-
     def clean_name(self):
         """Метод для проверки длины поля <name>"""
         snippet_name = self.cleaned_data.get("name")
@@ -47,7 +45,7 @@ class SnippetForm(ModelForm):
 class UserRegistrationForm(ModelForm):
     class Meta:
         model = User
-        fields = ["username", "email"]
+        fields = ["username", "email", "is_staff"]
 
     password1 = CharField(label="password", widget=PasswordInput)
     password2 = CharField(label="password confirm", widget=PasswordInput)
