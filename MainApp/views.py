@@ -3,11 +3,22 @@ from django.shortcuts import get_object_or_404, render, redirect
 from MainApp.forms import SnippetForm
 from MainApp.models import Snippet
 from django.contrib import auth
-
+from django.contrib.auth.decorators import login_required
 
 def index_page(request):
     context = {'pagename': 'PythonBin'}
     return render(request, 'pages/index.html', context)
+
+
+@login_required(login_url='home')
+def my_snippets(request):
+    snippets = Snippet.objects.filter(user=request.user)
+    context = {
+        'pagename': 'Просмотр сниппетов',
+        'snippets': snippets,
+        }
+    
+    return render(request, 'pages/view_snippets.html', context)
 
 
 def add_snippet_page(request):
