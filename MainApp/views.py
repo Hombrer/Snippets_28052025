@@ -1,6 +1,5 @@
-from django.http import HttpResponse, HttpResponseNotAllowed
 from django.shortcuts import get_object_or_404, render, redirect
-from MainApp.forms import SnippetForm
+from MainApp.forms import SnippetForm, UserRegistrationForm
 from MainApp.models import Snippet
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
@@ -160,3 +159,15 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return redirect('home')
+
+
+def create_user(request):
+    context = {'pagename': 'Регистрация нового пользователя'}
+    # Создаем пустую форму при запросе GET
+    ...
+
+    # Получаем данные из формы, валидируем и на их основе создаем нового пользователя, сохраняя его в БД
+    ...
+
+
+    return render(request, 'pages/registration.html', context)
