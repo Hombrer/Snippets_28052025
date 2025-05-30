@@ -99,24 +99,25 @@ def snippet_edit(request, snippet_id):
 
     # Получаем данные из формы и на их основе обновляем атрибуты snippet'a, сохраняя его в БД
     # Variant 1
-    if request.method == 'POST':
-        form = SnippetForm(request.POST, instance=snippet)
-        if form.is_valid():
-            form.save()
-            return redirect("snippets-list")  # URL для списка сниппетов
-        return render(request, "pages/add_snippet.html", context={"form": form})
+    # if request.method == 'POST':
+    #     form = SnippetForm(request.POST, instance=snippet)
+    #     if form.is_valid():
+    #         form.save()
+    #         return redirect("snippets-list")  # URL для списка сниппетов
+    #     return render(request, "pages/add_snippet.html", context={"form": form})
     
     # Variant 2
-    # if request.method == "POST":
-    #     data_form = request.POST
-    #     # Универсальный случай
-    #     for key_as_attr, value in data_form.items():
-    #         setattr(snippet, key_as_attr, value)
-    #     # Частный случай
-    #     # snippet.name = data_form["name"]
-    #     # snippet.code = data_form["code"]
-    #     snippet.save()
-    #     return redirect("snippets-list")  # URL для списка сниппетов
+    if request.method == "POST":
+        data_form = request.POST
+         # Универсальный случай
+        for key_as_attr, value in data_form.items():
+            setattr(snippet, key_as_attr, value)
+        snippet.public = data_form.get("public", False)
+        # Частный случай
+        # snippet.name = data_form["name"]
+        # snippet.code = data_form["code"]
+        snippet.save()
+        return redirect("snippets-list")  # URL для списка сниппетов
     
 
 def snippet_search(request):
